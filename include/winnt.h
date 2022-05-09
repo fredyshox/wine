@@ -6132,6 +6132,11 @@ typedef struct _SYSTEM_CPU_SET_INFORMATION
     } DUMMYUNIONNAME;
 } SYSTEM_CPU_SET_INFORMATION, *PSYSTEM_CPU_SET_INFORMATION;
 
+/* Windows 10 Rtl stuff */
+
+NTSYSAPI VOID WINAPI RtlGetDeviceFamilyInfoEnum(ULONGLONG*, DWORD*, DWORD*);
+NTSYSAPI VOID WINAPI RtlConvertDeviceFamilyInfoToString(DWORD*, DWORD*, const LPWSTR, const LPWSTR);
+
 /* Threadpool things */
 typedef DWORD TP_VERSION,*PTP_VERSION;
 

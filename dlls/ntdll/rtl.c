@@ -2212,3 +2212,54 @@ char WINAPI RtlQueryProcessPlaceholderCompatibilityMode(void)
     FIXME("stub\n");
     return PHCM_APPLICATION_DEFAULT;
 }
+
+#define DEVICEFAMILYDEVICEFORM_DESKTOP                  0x00000003
+#define DEVICEFAMILYDEVICEFORMSTR_DESKTOP               "Desktop"
+
+#define DEVICEFAMILYINFOENUM_DESKTOP                    0x00000003
+#define DEVICEFAMILYINFOENUMSTR_DESKTOP                 "Windows.Desktop"
+
+
+/*********************************************************************
+ *           RtlGetDeviceFamilyInfoEnum [NTDLL.@]
+ */
+VOID WINAPI RtlGetDeviceFamilyInfoEnum(ULONGLONG *uap_info, DWORD *device_family, DWORD* device_form) {
+    if (device_form != NULL) {
+        *device_form = DEVICEFAMILYDEVICEFORM_DESKTOP;
+    }
+    if (device_family != NULL) {
+        *device_family = DEVICEFAMILYINFOENUM_DESKTOP;
+    }
+    if (uap_info != NULL) {
+        ULONGLONG uap_info_temp = 0;
+        uap_info_temp |= (0x000aULL << 48); // OS version major
+        uap_info_temp |= (0x0000ULL << 32); // OS version minor
+        uap_info_temp |= (0x4a64ULL << 16); // CurrentBuildNumber from registry
+        uap_info_temp |= 0x0508ULL; // UBR
+        *uap_info = uap_info_temp;
+    }
+}
+
+/*********************************************************************
+ *           RtlConvertDeviceFamilyInfoToString [NTDLL.@]
+ */
+VOID WINAPI RtlConvertDeviceFamilyInfoToString(
+    DWORD *device_family_bufsize,
+    DWORD *device_form_bufsize,
+    const LPWSTR device_family,
+    const LPWSTR device_form
+) {
+    char device_family_cstr[] = DEVICEFAMILYDEVICEFORMSTR_DESKTOP;
+    char device_form_cstr[] = DEVICEFAMILYINFOENUMSTR_DESKTOP;
+    DWORD device_family_minsize = 0;
+    DWORD device_form_minsize = 0;
+    
+    if (device_family_bufsize != NULL && device_family != NULL) {
+        device_family_minsize = min(*device_family_bufsize, sizeof(device_family_cstr));
+        mbstowcs(device_family, device_family_cstr, device_family_minsize);
+    }
+    if (device_form_bufsize != NULL && device_form != NULL) {
+        device_form_minsize = min(*device_form_bufsize, sizeof(device_form_cstr));
+        mbstowcs(device_form, device_form_cstr, device_form_minsize);
+    }
+}
