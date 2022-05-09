@@ -1,0 +1,8 @@
+MODULE = iertutil.dll
+IMPORTS = combase uuid msvcrt urlmon oleaut32 ole32
+
+C_SRCS = \
+    uri.c \
+    main.c
+
+IDL_SRCS = classes.idl

@@ -1,0 +1,3 @@
+#pragma makedep register
+
+#include "windows.foundation.idl"
