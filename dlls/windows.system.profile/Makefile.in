@@ -1,0 +1,8 @@
+MODULE = windows.system.profile.dll
+IMPORTS = combase uuid advapi32 msvcrt setupapi
+
+C_SRCS = \
+    analytics_info.c \
+    main.c
+
+IDL_SRCS = classes.idl

@@ -794,6 +794,7 @@ SOURCES = \
 	windows.system.idl \
 	windows.system.power.idl \
 	windows.system.userprofile.idl \
+	windows.system.profile.idl \
 	windowscontracts.idl \
 	windowsx.h \
 	wine/debug.h \
