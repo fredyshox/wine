@@ -32,6 +32,7 @@ static const char *debugstr_hstring(HSTRING hstr)
 {
     const WCHAR *str;
     UINT32 len;
+    if (!hstr) return "(null)";
     if (hstr && !((ULONG_PTR)hstr >> 16)) return "(invalid)";
     str = WindowsGetStringRawBuffer(hstr, &len);
     return wine_dbgstr_wn(str, len);
@@ -287,7 +288,11 @@ HRESULT WINAPI GetRestrictedErrorInfo(IRestrictedErrorInfo **info)
 BOOL WINAPI RoOriginateLanguageException(HRESULT error, HSTRING message, IUnknown *language_exception)
 {
     FIXME("%#lx, %s, %p: stub\n", error, debugstr_hstring(message), language_exception);
-    return FALSE;
+    if (error == S_OK) {
+        return FALSE;
+    }
+
+    return TRUE;
 }
 
 /***********************************************************************
