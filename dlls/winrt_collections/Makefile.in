@@ -1,0 +1,8 @@
+MODULE = winrt_collections.dll
+IMPORTLIB = winrt_collections
+IMPORTS = combase uuid advapi32 msvcrt setupapi
+
+C_SRCS = \
+    map/map_hstring_hstring.c \
+    map/map_inspectable_inspectable.c \
+    guid.c

@@ -3,6 +3,7 @@
     defined(T_K_CMP_FUNC)
 
 #include "map_t.h"
+#include "private.h"
 #include "wine/rbtree.h"
 #include "wine/debug.h"
 
@@ -66,7 +67,6 @@ WINE_DEFAULT_DEBUG_CHANNEL(winrt_coll);
 #define VTBL_IMAPVIEW_TK_TV DEFINE_VTBL(IMAPVIEW_TK_TV)
 #define impl_from_IMAPVIEW_TK_TV TEMPLATE(impl_from, IMAPVIEW_TK_TV)
 
-#define IITERABLE_IKEYVALUEPAIR_TK_TV TEMPLATE3(IIterable, IKeyValuePair, T_K, T_V)
 #define IID_IITERABLE_IKEYVALUEPAIR_TK_TV DEFINE_IID(IITERABLE_IKEYVALUEPAIR_TK_TV)
 #define VTBL_IITERABLE_IKEYVALUEPAIR_TK_TV DEFINE_VTBL(IITERABLE_IKEYVALUEPAIR_TK_TV)
 #define impl_from_IITERABLE_IKEYVALUEPAIR_TK_TV TEMPLATE(impl_from, IITERABLE_IKEYVALUEPAIR_TK_TV)
@@ -309,7 +309,7 @@ static HRESULT WINAPI key_value_container_iterator_MoveNext( IITERATOR_IKEYVALUE
         return E_BOUNDS;
 
     impl->current = rb_next(impl->current);
-
+    *value = impl->current != NULL;
     return S_OK;
 }
 
@@ -656,8 +656,10 @@ static HRESULT WINAPI map_iterable_First(IITERABLE_IKEYVALUEPAIR_TK_TV* iface, I
 
     new_iterator->IIterator_IKeyValuePair_iface.lpVtbl = &key_value_container_iterator_vtbl;
     new_iterator->map = &impl->IMap_iface;
-    new_iterator->current = impl->tree.root;
+    new_iterator->current = rb_head(impl->tree.root);
     new_iterator->ref = 1; 
+
+    IInspectable_AddRef((IInspectable*) &impl->IMap_iface);
 
     *iterator = &new_iterator->IIterator_IKeyValuePair_iface;
     return S_OK;
@@ -736,7 +738,7 @@ static int rbtree_map_cmp_func(const void* key, const struct rb_entry* entry)
     return T_K_CMP_FUNC(key, RB_ENTRY_VALUE(entry, struct KEY_VALUE_CONTAINER_T, entry)->key);
 }
 
-HRESULT TEMPLATE2(rbtree_map_create, T_K, T_V)(IMAP_TK_TV** value) 
+HRESULT TEMPLATE2(rbtree_map_create, T_K, T_V)(IMAP_TK_TV** map,  IITERABLE_IKEYVALUEPAIR_TK_TV** iterable) 
 {
     struct MAP_T *map;
 
@@ -751,7 +753,9 @@ HRESULT TEMPLATE2(rbtree_map_create, T_K, T_V)(IMAP_TK_TV** value)
     
     rb_init(&map->tree, rbtree_map_cmp_func);
 
-    *value = &map->IMap_iface;
+    *map = &map->IMap_iface;
+    if (iterable)
+        *iterable = &map->IIterable_IKeyValuePair_iface;
 
     return S_OK;
 }

@@ -1,5 +1,6 @@
 #if defined(T_K) && defined(T_V)
 
+#include "private.h"
 #include "templates.h"
 
 #define IMAP_TK_TV TEMPLATE2(IMap, T_K, T_V)

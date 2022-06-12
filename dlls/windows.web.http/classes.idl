@@ -1,0 +1,22 @@
+#ifdef __WIDL__
+#pragma winrt ns_prefix
+#endif
+
+import "inspectable.idl";
+import "windows.foundation.idl";
+import "windows.foundation.collections.idl";
+
+namespace Windows.Foundation.Collections {
+    declare {
+        interface Windows.Foundation.Collections.IKeyValuePair<HSTRING,HSTRING>;
+        interface Windows.Foundation.Collections.IIterator<Windows.Foundation.Collections.IKeyValuePair<HSTRING,HSTRING>*>;
+        interface Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<HSTRING,HSTRING>*>;
+        interface Windows.Foundation.Collections.IMapView<HSTRING,HSTRING>;
+        interface Windows.Foundation.Collections.IMap<HSTRING,HSTRING>;
+        interface Windows.Foundation.Collections.IKeyValuePair<IInspectable*,IInspectable*>;
+        interface Windows.Foundation.Collections.IIterator<Windows.Foundation.Collections.IKeyValuePair<IInspectable*,IInspectable*>*>;
+        interface Windows.Foundation.Collections.IIterable<Windows.Foundation.Collections.IKeyValuePair<IInspectable*,IInspectable*>*>;
+        interface Windows.Foundation.Collections.IMapView<IInspectable*,IInspectable*>;
+        interface Windows.Foundation.Collections.IMap<IInspectable*,IInspectable*>;
+    }
+}

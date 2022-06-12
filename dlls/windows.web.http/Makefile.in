@@ -1,0 +1,9 @@
+MODULE = windows.web.http.dll
+IMPORTS = combase uuid advapi32 msvcrt setupapi
+
+C_SRCS = \
+    map/map_hstring_hstring.c \
+    map/map_inspectable_inspectable.c \
+    guid.c
+
+IDL_SRCS = classes.idl

@@ -1,8 +1,11 @@
-struct map {
-    IMapView_HSTRING_HSTRING IMapView_HSTRING_HSTRING_iface;
-    void* impl;
-}
+#include "tmp.h"
 
-class map_impl {
-    
+#ifndef __cplusplus
+#error "CPP file"
+#endif
+
+#include <iostream>
+
+void print_something() {
+    std::cout << "something" << std::endl;
 }

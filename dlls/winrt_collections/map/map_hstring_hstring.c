@@ -1,5 +1,6 @@
-#include "map_hstring_hstring.h"
+#include "private.h"
 #include "winstring.h"
+#include "map_hstring_hstring.h"
 #include <string.h>
 
 int hstring_compare_func(const void* a, const void* b) 

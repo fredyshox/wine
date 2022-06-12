@@ -780,6 +780,7 @@ SOURCES = \
 	windows.devices.haptics.idl \
 	windows.devices.power.idl \
 	windows.foundation.collections.idl \
+	windows.foundation.collections.map.idl \
 	windows.foundation.idl \
 	windows.gaming.input.custom.idl \
 	windows.gaming.input.forcefeedback.idl \

@@ -1419,6 +1419,8 @@ enable_windows_globalization
 enable_windows_media_devices
 enable_windows_media_speech
 enable_windows_system_profile
+enable_windows_web_http
+enable_winrt_collections
 enable_windowscodecs
 enable_windowscodecsext
 enable_winealsa_drv
@@ -21853,6 +21855,9 @@ wine_fn_config_makefile dlls/windows.media.devices/tests enable_tests
 wine_fn_config_makefile dlls/windows.media.speech enable_windows_media_speech
 wine_fn_config_makefile dlls/windows.media.speech/tests enable_tests
 wine_fn_config_makefile dlls/windows.system.profile enable_windows_system_profile
+wine_fn_config_makefile dlls/windows.web.http enable_windows_web_http
+wine_fn_config_makefile dlls/winrt_collections enable_winrt_collections
+wine_fn_config_makefile dlls/winrt_collections/tests enable_tests
 wine_fn_config_makefile dlls/windowscodecs enable_windowscodecs
 wine_fn_config_makefile dlls/windowscodecs/tests enable_tests
 wine_fn_config_makefile dlls/windowscodecsext enable_windowscodecsext

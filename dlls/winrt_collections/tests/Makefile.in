@@ -1,0 +1,5 @@
+TESTDLL = winrt_collections.dll
+IMPORTS = combase uuid winrt_collections
+
+C_SRCS = \
+	map.c

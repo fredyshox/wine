@@ -1,3 +1,4 @@
+#include "private.h"
 #include "map_inspectable_inspectable.h"
 
 #define _INSPECTABLE_ADD_REF(invalue, outvalue) \
