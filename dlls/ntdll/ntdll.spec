@@ -712,6 +712,8 @@
 @ stdcall RtlGetCurrentProcessorNumberEx(ptr)
 @ stdcall RtlGetCurrentTransaction()
 @ stdcall RtlGetDaclSecurityDescriptor(ptr ptr ptr ptr)
+@ stdcall RtlGetDeviceFamilyInfoEnum(ptr ptr ptr)
+@ stdcall RtlConvertDeviceFamilyInfoToString(ptr ptr ptr ptr)
 @ stdcall RtlGetElementGenericTable(ptr long)
 # @ stub RtlGetElementGenericTableAvl
 @ stdcall RtlGetEnabledExtendedFeatures(int64)

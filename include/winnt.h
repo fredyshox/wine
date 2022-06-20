@@ -6224,6 +6224,19 @@ typedef struct _SYSTEM_CPU_SET_INFORMATION
     } DUMMYUNIONNAME;
 } SYSTEM_CPU_SET_INFORMATION, *PSYSTEM_CPU_SET_INFORMATION;
 
+/* Windows 10 Rtl apis */
+
+#define DEVICEFAMILYINFOENUM_DESKTOP                    0x00000003
+
+#define DEVICEFAMILYINFOENUM_MAX                        0x00000011
+
+#define DEVICEFAMILYDEVICEFORM_UNKNOWN                  0x00000000
+
+#define DEVICEFAMILYDEVICEFORM_MAX                      0x00000021
+
+NTSYSAPI VOID WINAPI RtlGetDeviceFamilyInfoEnum(ULONGLONG*, DWORD*, DWORD*);
+NTSYSAPI VOID WINAPI RtlConvertDeviceFamilyInfoToString(DWORD*, DWORD*, const WCHAR*, const WCHAR*);
+
 /* Threadpool things */
 typedef DWORD TP_VERSION,*PTP_VERSION;
 

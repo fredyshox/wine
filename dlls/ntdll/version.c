@@ -609,7 +609,6 @@ void WINAPI RtlGetNtVersionNumbers( LPDWORD major, LPDWORD minor, LPDWORD build 
     if (build) *build = (0xF0000000 | current_version->dwBuildNumber);
 }
 
-
 /******************************************************************************
  *  RtlGetNtProductType   (NTDLL.@)
  */
@@ -760,6 +759,53 @@ NTSTATUS WINAPI RtlVerifyVersionInfo( const RTL_OSVERSIONINFOEXW *info,
     return STATUS_SUCCESS;
 }
 
+/*********************************************************************
+ *  RtlGetDeviceFamilyInfoEnum (NTDLL.@)
+ *
+ * NOTES
+ * Introduced in Windows 10 (NT10.0)
+ */
+void WINAPI RtlGetDeviceFamilyInfoEnum( ULONGLONG *uap_info, DWORD *device_family, DWORD *device_form )
+{
+    if (device_form)
+        *device_form = DEVICEFAMILYDEVICEFORM_UNKNOWN;
+    if (device_family)
+        *device_family = DEVICEFAMILYINFOENUM_DESKTOP;
+    if (!uap_info)
+        return;
+
+    /**
+     * UAP info is 64 bit unsigned integer which contains four 16-bit chunks:
+     * 1. os version major
+     * 2. os version minor
+     * 3. current build number
+     * 4. update build revision
+    */
+    *uap_info = 0;
+    *uap_info |= (((ULONGLONG)current_version->dwMajorVersion & 0xffff) << 48); /* os version major */
+    *uap_info |= (((ULONGLONG)current_version->dwMinorVersion & 0xffff) << 32); /* os version minor */
+    *uap_info |= (((ULONGLONG)current_version->dwBuildNumber & 0xffff) << 16); /* current build number */
+    /* UBR not available */
+}
+
+/*********************************************************************
+ *  RtlConvertDeviceFamilyInfoToString (NTDLL.@)
+ *
+ * NOTES
+ * Introduced in Windows 10 (NT10.0)
+ */
+void WINAPI RtlConvertDeviceFamilyInfoToString( DWORD *device_family_bufsize, DWORD *device_form_bufsize,
+                                                const WCHAR *device_family, const WCHAR *device_form) 
+{
+    DWORD device_family_len = (wcslen( L"Windows.Desktop" ) + 1) * sizeof(WCHAR);
+    DWORD device_form_len = (wcslen( L"Unknown" ) + 1) * sizeof(WCHAR);
+    if (*device_family_bufsize >= device_family_len)
+        wcscpy( device_family, L"Windows.Desktop" );
+    if (*device_form_bufsize >= device_form_len)
+        wcscpy( device_form, L"Unknown" );
+    *device_family_bufsize = device_family_len;
+    *device_form_bufsize = device_form_len;
+}
 
 /******************************************************************************
  *        VerSetConditionMask   (NTDLL.@)
