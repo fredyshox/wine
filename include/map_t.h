@@ -7,8 +7,9 @@
 #define IMAP_TK_TV TEMPLATE2(IMap, T_K, T_V)
 #define IITERABLE_IKEYVALUEPAIR_TK_TV TEMPLATE3(IIterable, IKeyValuePair, T_K, T_V)
 
-HRESULT TEMPLATE2(rbtree_map_create, T_K, T_V)(IMAP_TK_TV** map, IITERABLE_IKEYVALUEPAIR_TK_TV** iterable);
+HRESULT TEMPLATE2(rbtree_map_create, T_K, T_V)(IMAP_TK_TV** map_iface, IITERABLE_IKEYVALUEPAIR_TK_TV** iterable_iface);
 
+/*
 #define DEFINE_IMAP_CONFORMANCE(pfx, impl_type, key_type, value_type, impl_from, iface_field)             \
 static HRESULT WINAPI pfx##_Lookup(iface_type *iface, key_type key, value_type value)                     \
 {                                                                                                         \
@@ -52,3 +53,4 @@ static HRESULT WINAPI pfx##_First(iface_type *iface, iface_type* value)         
     impl_type *impl = impl_from(iface);                                                                                           \
     return iface_type##_First(value);
 }
+*/

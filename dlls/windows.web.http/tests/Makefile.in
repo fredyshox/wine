@@ -1,5 +1,0 @@
-TESTDLL = windows.web.http.dll
-IMPORTS = combase uuid
-
-C_SRCS = \
-	map.c
