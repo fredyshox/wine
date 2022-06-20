@@ -6132,7 +6132,12 @@ typedef struct _SYSTEM_CPU_SET_INFORMATION
     } DUMMYUNIONNAME;
 } SYSTEM_CPU_SET_INFORMATION, *PSYSTEM_CPU_SET_INFORMATION;
 
-/* Windows 10 Rtl stuff */
+/* Windows 10 Rtl apis */
+
+#define DEVICEFAMILYDEVICEFORM_DESKTOP                  0x00000003
+#define DEVICEFAMILYINFOENUM_DESKTOP                    0x00000003
+#define DEVICEFAMILYDEVICEFORM_DESKTOP_STR              L"Desktop"
+#define DEVICEFAMILYINFOENUM_DESKTOP_STR                L"Windows.Desktop"
 
 NTSYSAPI VOID WINAPI RtlGetDeviceFamilyInfoEnum(ULONGLONG*, DWORD*, DWORD*);
 NTSYSAPI VOID WINAPI RtlConvertDeviceFamilyInfoToString(DWORD*, DWORD*, const LPWSTR, const LPWSTR);

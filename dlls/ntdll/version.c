@@ -610,6 +610,61 @@ void WINAPI RtlGetNtVersionNumbers( LPDWORD major, LPDWORD minor, LPDWORD build 
 }
 
 
+/*********************************************************************
+ *  RtlGetDeviceFamilyInfoEnum (NTDLL.@)
+ *
+ * NOTES
+ * Introduced in Windows 10 (NT10.0)
+ */
+VOID WINAPI RtlGetDeviceFamilyInfoEnum(ULONGLONG *uap_info, DWORD *device_family, DWORD *device_form)
+{
+    ULONGLONG uap_info_temp;
+
+    if (device_form != NULL)
+        *device_form = DEVICEFAMILYDEVICEFORM_DESKTOP;
+    if (device_family != NULL)
+        *device_family = DEVICEFAMILYINFOENUM_DESKTOP;
+    if (uap_info == NULL)
+        return;
+
+    /**
+    UAP info is 64 bit unsigned integer which contains four 16-bit chunks:
+    1. os version major
+    2. os version minor
+    3. current build number
+    4. UBR
+    */
+    uap_info_temp = 0;
+    uap_info_temp |= (((ULONGLONG) current_version->dwMajorVersion & 0xffff) << 48); /* os version major */
+    uap_info_temp |= (((ULONGLONG) current_version->dwMinorVersion & 0xffff) << 32); /* os version minor */
+    uap_info_temp |= (((ULONGLONG) current_version->dwBuildNumber & 0xffff) << 16); /* current build number */
+    /* UBR not available */
+    *uap_info = uap_info_temp;
+}
+
+/*********************************************************************
+ *  RtlConvertDeviceFamilyInfoToString (NTDLL.@)
+ *
+ * NOTES
+ * Introduced in Windows 10 (NT10.0)
+ */
+VOID WINAPI RtlConvertDeviceFamilyInfoToString(
+    DWORD *device_family_bufsize,
+    DWORD *device_form_bufsize,
+    const LPWSTR device_family,
+    const LPWSTR device_form
+) {
+    if (device_family_bufsize != NULL)
+        *device_family_bufsize = (DWORD)wcslen(DEVICEFAMILYDEVICEFORM_DESKTOP_STR);
+    if (device_family != NULL)
+        wcscpy(device_family, DEVICEFAMILYDEVICEFORM_DESKTOP_STR);
+    if (device_form_bufsize != NULL)
+        *device_form_bufsize = (DWORD)wcslen(DEVICEFAMILYINFOENUM_DESKTOP_STR);
+    if (device_form != NULL)
+        wcscpy(device_form, DEVICEFAMILYINFOENUM_DESKTOP_STR);
+}
+
+
 /******************************************************************************
  *  RtlGetNtProductType   (NTDLL.@)
  */
